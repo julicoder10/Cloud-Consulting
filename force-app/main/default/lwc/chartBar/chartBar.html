@@ -1,0 +1,18 @@
+<template>
+	<div class="container">
+		<lightning-layout vertical-align="center">
+			<template lwc:if={isProfit}>
+				<lightning-layout-item class="profit"> {percentage}% </lightning-layout-item>
+				<lightning-layout-item flexibility="grow">
+					<div class="bar_profit" style={style}></div>
+				</lightning-layout-item>
+			</template>
+			<template lwc:else>
+				<lightning-layout-item class="loss"> {percentage}% </lightning-layout-item>
+				<lightning-layout-item flexibility="grow">
+					<div class="bar_lose" style={style}></div>
+				</lightning-layout-item>
+			</template>
+		</lightning-layout>
+	</div>
+</template>

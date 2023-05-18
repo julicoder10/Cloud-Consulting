@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>verify_creation_task</fullName>
+    <active>true</active>
+    <errorConditionFormula>NOT(ISPICKVAL(ResourceProject__r.Project__r.State__c, &apos;In Progress&apos;))</errorConditionFormula>
+    <errorMessage>The Proyect State must be &quot;In Progress&quot; to create a Task</errorMessage>
+</ValidationRule>

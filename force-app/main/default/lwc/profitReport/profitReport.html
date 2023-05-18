@@ -1,0 +1,13 @@
+<template>
+	<lightning-card title="Metrics Amounts" icon-name="standard:product_consumed">
+		<div class="slds-var-m-around_medium">
+			<template lwc:if={isProfit}>
+				<h1 class="profit">PROFIT</h1>
+			</template>
+			<template lwc:else>
+				<h3 class="loss">LOSS</h3>
+			</template>
+			<c-chart-bar class="slds-show slds-is-relative" percentage={percentage} is-profit={isProfit}></c-chart-bar>
+		</div>
+	</lightning-card>
+</template>

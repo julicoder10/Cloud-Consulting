@@ -1,0 +1,35 @@
+<template>
+	<template lwc:if={isEqualRol}>
+		<div class="bg_resource">
+			<lightning-layout multiple-rows="true" horizontal-align="space">
+				<lightning-layout-item class="bg_resource-name" padding="around-small" size="5">
+					<lightning-input type="checkbox" value={valueCheckbox} label={resource.Name}
+						onchange={handleChangeCheckbox}>
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item class="bg_resource-name" padding="around-small" size="5">
+					<p>{resource.Rate_p_hour__c} USD per hours</p>
+				</lightning-layout-item>
+				<lightning-layout-item padding="around-small" size="6">
+					<lightning-input type="date" label="Start Date" value={valueStartDate}
+						onchange={handleChangeStartDate} placeholder="04/02/2023"
+						min={projectItem.Project__r.Project_Start__c} max={projectItem.Project__r.Project_End__c}
+						disabled={disabledStartDate} checked>
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item padding="around-small" size="6">
+					<lightning-input type="date" label="End Date" value={valueEndDate} onchange={handleChangeEndDate}
+						placeholder="04/02/2023" min={projectItem.Project__r.Project_Start__c}
+						max={projectItem.Project__r.Project_End__c} disabled={disabledEndDate} checked>
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item padding="around-small" size="5">
+					<lightning-input type="number" label="Assigned Hours" step="1" min="0" max={MaxAssignedHours}
+						value={valueAssignedHours} disabled={disabledAssignedHours}
+						onchange={handleChangeAssignedHours}>
+					</lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+		</div>
+	</template>
+</template>

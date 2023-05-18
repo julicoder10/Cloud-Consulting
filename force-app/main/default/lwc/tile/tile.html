@@ -1,0 +1,17 @@
+<template>
+	<lightning-card title={Project__c.Name} class="project-tile">
+		<div class="slds-var-p-horizontal_small">
+			<div class="slds-media">
+				<div class="slds-media__figure">
+					<img src={appResources.projectSilhouette} alt="Project profile" class="project-silhouette" />
+				</div>
+				<div class="slds-media__body">
+					<p class="slds-var-m-bottom_xx-small">{Project__c.Sex__c}</p>
+					<p class="slds-var-m-bottom_xx-small">{Project__c.Age__c} years old</p>
+					<p class="slds-var-m-bottom_xx-small">{Project__c.Height__c} cm</p>
+					<p class="slds-var-m-bottom_xx-small">{Project__c.Weight__c} Kg</p>
+				</div>
+			</div>
+		</div>
+	</lightning-card>
+</template>

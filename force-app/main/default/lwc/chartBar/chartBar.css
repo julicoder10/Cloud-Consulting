@@ -1,0 +1,23 @@
+.container {
+    overflow: hidden;
+}
+
+.bar_profit {
+    margin-left: 4px;
+    height: 36px;
+    background-color: cadetblue;
+}
+
+.bar_lose {
+    margin-left: 4px;
+    height: 36px;
+    background-color: #d83714;
+}
+
+.profit {
+	color: cadetblue;
+}
+
+.loss {
+	color: #d83714;
+}

@@ -1,0 +1,75 @@
+// Use .soql files to store SOQL queries.
+// You can execute queries in VS Code by selecting the
+//     query text and running the command:
+//     SFDX: Execute SOQL Query with Currently Selected Text
+
+//SELECT Name
+//FROM Account
+//WHERE Id IN ( SELECT AccountId FROM Contact) 
+//    OR Id NOT IN ( SELECT AccountId FROM Contact)
+
+//SELECT Name, Profile.Name, UserRole.Name, Rate_p_hour__c
+//FROM User
+//WHERE Profile.Name IN ('Developer', 'Architect', 'Consultant')
+//AND Id In (
+//        SELECT User__c FROM ResourceProject__c
+//        WHERE Start_Date__c != NULL AND End_Date__c != NULL
+//        AND ( NOT ( Start_Date__c <= Project__c.Project_Start__c AND End_Date__c >= Project__c.Project_Start__c))
+//        AND ( NOT ( Start_Date__c <= Project__c.Project_End__c AND End_Date__c >= Project__c.Project_End__c))
+//)
+
+//SELECT User__r.Name
+//FROM ResourceProject__c
+//WHERE Project__c = 'a00Dp000001lEeHIAU' AND
+//      Start_Date__c != NULL AND End_Date__c != NULL
+//        AND ( NOT ( Start_Date__c <= 2023-04-21 AND End_Date__c >= 2023-04-21))
+//        AND ( NOT ( Start_Date__c <= 2023-04-25 AND End_Date__c >= 2023-04-25))
+
+//SELECT Id, Name, Profile.Name, UserRole.Name, Rate_p_hour__c
+//        FROM User
+//        WHERE Profile.Name IN ('Developer', 'Architect', 'Consultant')
+//        AND Id IN (
+//                SELECT User__c FROM ResourceProject__c
+//                WHERE Start_Date__c != NULL AND End_Date__c != NULL
+//                AND ( NOT ( Start_Date__c <= 2023-04-21 AND End_Date__c >= 2023-04-21))
+//                AND ( NOT ( Start_Date__c <= 2023-04-25 AND End_Date__c >= 2023-04-25))
+//        )
+
+//SELECT User__c, Project__c, Start_Date__c, End_Date__c
+//FROM ResourceProject__c
+//WHERE User__c IN ('005Dp000002K2GNIA0')
+
+
+//SELECT Id, Name, Profile.Name, UserRole.Name, Rate_p_hour__c
+//                FROM User
+//                WHERE Profile.Name IN ('Developer', 'Architect', 'Consultant')
+//                AND Id NOT IN (
+//                        SELECT User__c FROM ResourceProject__c
+//                )
+
+
+//SELECT ( SELECT Id, Name, Status__c FROM Assigment_Tasks__r)
+//FROM ResourceProject__c
+
+
+//SELECT AccountId, COUNT(Id) 
+//FROM Contact
+//GROUP BY AccountId
+
+//SELECT Id, Project__r.Name, (
+//        SELECT Id, Name, Status__c, EstimatedHours__c, ReportedHours__c
+//        FROM Assigment_Tasks__r
+//        )
+//FROM ResourceProject__c
+//WHERE User__c = '005Dp000002K2GQIA0'
+
+//SELECT Id, Name, AccountId
+//FROM Contact
+
+//SELECT Id, Name, (SELECT Id, Name FROM Contacts) 
+//FROM Account
+//WHERE Id IN ( SELECT AccountId FROM Contact WHERE AccountId = NULL )
+
+SELECT Id, Name, AccountId
+FROM Contact
+WHERE AccountId = '001Dp00000F73T0IAJ'

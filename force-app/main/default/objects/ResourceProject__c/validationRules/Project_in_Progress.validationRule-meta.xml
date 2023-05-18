@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Project_in_Progress</fullName>
+    <active>true</active>
+    <errorConditionFormula>(ISPICKVAL(Project__r.State__c , &apos;In Progress&apos;))</errorConditionFormula>
+    <errorMessage>Resource allocation is not allowed when the Project is on State &quot;In Progress&quot;</errorMessage>
+</ValidationRule>

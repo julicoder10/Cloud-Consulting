@@ -1,0 +1,92 @@
+<template>
+	<lightning-accordion label="Projects with related tasks" allow-multiple-sections-open>
+		<lightning-accordion-section name="A" label="Projects" class="accordion">
+
+            <!--ITERO SOBRE LOS resourcePROJECTS CON UN FOR EACH DONDE CADA ITEM SE LLAMA PROJECT-->
+
+			<template for:each={resourceProjects} for:item="resourceProject">
+                
+                    <lightning-accordion-section label={resourceProject.Project__r.Name} key={resourceProject.Id}>
+
+                <!--ITERO SOBRE LOS TAREAS DE CADA ITEM (OSEA resourcePROJECT)-->
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered" if:true = {resourceProject.Assigment_Tasks__r}>
+                    <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate" title="Task">Task</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate" title="State">State</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate" title="Estimated Hours">Estimated Hours</div>
+                        </th>
+
+                        <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate" title="Registered Hours">Registered Hours</div>
+                        </th>
+
+                        <th class="slds-text-title_caps" scope="col">
+                        <div class="slds-truncate" title="Actions">Actions</div>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <template for:each={resourceProject.Assigment_Tasks__r} for:item="task">
+                        <tr key={task.Id}>
+
+                        <td>
+                            <div class="slds-truncate black-text" title={task.Name}>{task.Name}</div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate" title={task.Status__c}>{task.Status__c}</div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate" title={task.EstimatedHours__c}>{task.EstimatedHours__c}</div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate" title={task.ReportedHours__c}>{task.ReportedHours__c}</div>
+                        </td>
+
+                        <td>
+                           <!-- Acá se pone la cantidad de horas (input) y los botones de acciones. -->
+                            <div class="actions">
+                                <!-- Directiva de visualización condicional: si el estado es "no init" y las horas registradas son 0, mostrar botón de asignar, de lo contrario, mostrar los botones y el input. -->
+                                
+                                <!-- (Init__c es un campo formula que verifica el status tarea-->
+                                <template if:true={task.Init__c}>
+                                    <div class="input-div">
+                                        <lightning-input type="number" class="input-change"  onchange={handleChange}>
+                                        </lightning-input>
+                                    </div>
+                                    <!-- Botón de registrar horas. -->
+                                    <div>
+                                        <lightning-button label="Register hours" onclick={handleClickRegisterHours} data-reportedhours={task.ReportedHours__c} data-id={task.Id}></lightning-button>
+                                    </div>
+                                    <!-- Botón de marcar la tarea en sí como completada. -->
+                                    <div>
+                                        <lightning-button label="Mark as Completed" onclick={handleClickCompleted} data-id={task.Id} data-status={task.Status__c}></lightning-button>
+                                    </div>
+                                </template>
+
+                                <template if:false={task.Init__c}>
+                                    <div>
+                                        <lightning-button label="Start" onclick={handleClickStart} data-id={task.Id}>
+                                        </lightning-button>
+                                    </div>
+                                </template>
+                            </div>
+                        </td>
+                        </tr>
+                    </template>
+                    </tbody>
+                </table>
+                <div if:false = {resourceProject.Assigment_Tasks__r} class="no-tasks">
+                    <h3>No tienes tareas para completar! :D </h3>
+                </div>    
+            </lightning-accordion-section>
+			</template>
+
+		</lightning-accordion-section>
+	</lightning-accordion>
+</template>

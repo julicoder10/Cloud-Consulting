@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <decisions>
+        <name>Has_open_tasks</name>
+        <label>Has open tasks?</label>
+        <locationX>50</locationX>
+        <locationY>516</locationY>
+        <defaultConnector>
+            <targetReference>Update_state</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Open_task</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Today</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Today</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_state</targetReference>
+            </connector>
+            <label>Open task</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Star_Today</name>
+        <label>Star Today?</label>
+        <locationX>182</locationX>
+        <locationY>396</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Meets_the_conditions</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Today</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record.Project_End__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Has_open_tasks</targetReference>
+            </connector>
+            <label>Meets the conditions</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>Today</name>
+        <dataType>Date</dataType>
+        <expression>TODAY()</expression>
+    </formulas>
+    <interviewLabel>Flow Schedule Fin del proyecto {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Flow Schedule Fin del proyecto</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_open_tasks</name>
+        <label>Get ResourceProjects</label>
+        <locationX>182</locationX>
+        <locationY>276</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Star_Today</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Project__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>ResourceProject__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_state</name>
+        <label>Update state</label>
+        <locationX>50</locationX>
+        <locationY>732</locationY>
+        <inputAssignments>
+            <field>State__c</field>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_open_tasks</targetReference>
+        </connector>
+        <filterLogic>or</filterLogic>
+        <filters>
+            <field>State__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Pre-kickoff</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>State__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>In Progress</stringValue>
+            </value>
+        </filters>
+        <object>Project__c</object>
+        <schedule>
+            <frequency>Daily</frequency>
+            <startDate>2023-04-24</startDate>
+            <startTime>15:23:00.000Z</startTime>
+        </schedule>
+        <triggerType>Scheduled</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>

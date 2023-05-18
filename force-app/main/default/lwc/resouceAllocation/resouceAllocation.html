@@ -1,0 +1,27 @@
+<template>
+	<lightning-accordion label="Allocating Resources" allow-multiple-sections-open>
+		<lightning-accordion-section name="Section" label="Allocating Resources" class="accordion">
+			<template for:each={projectItems} for:item="projectItem">
+				<lightning-accordion-section key={projectItem.Id} label={projectItem.Rol__c}>
+					<div  class="projectDate">
+						<div class="left">
+							<span> Project Date: </span>
+						</div>
+						<div class="right">
+							<span>{projectItem.Project__r.Project_Start__c}</span> To <span>{projectItem.Project__r.Project_End__c}</span>
+						</div>
+					</div>
+					<c-view-project-role key={projectItem.Id} project-item={projectItem}></c-view-project-role>
+					<template for:each={resources} for:item="resource">
+						<c-resource-item key={resource.Id} resource={resource} project-item={projectItem}
+							resource-rol={resource.Profile.Name} project-rol={projectItem.Rol__c}>
+						</c-resource-item>
+					</template>
+					<div class="container_button">
+						<lightning-button label="Assign" onclick={handleClick} variant="brand" stretch></lightning-button>
+					</div>
+				</lightning-accordion-section>
+			</template>
+		</lightning-accordion-section>
+	</lightning-accordion>
+</template>
